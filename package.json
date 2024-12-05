@@ -2,8 +2,10 @@
   "name": "media-library-manager",
   "version": "1.0.0",
   "description": "A Node.js web app that lets users log in, explore categorized music with images, and dynamically manage content using MongoDB and Redis caching.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
