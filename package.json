@@ -18,6 +18,7 @@
     "url": "https://github.com/BenArtzi4/media-library-manager/issues"
   },
   "homepage": "https://github.com/BenArtzi4/media-library-manager#readme",
+  "type": "module",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "compression": "^1.7.5",
