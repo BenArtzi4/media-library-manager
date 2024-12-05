@@ -1,0 +1,33 @@
+{
+  "name": "media-library-manager",
+  "version": "1.0.0",
+  "description": "A Node.js web app that lets users log in, explore categorized music with images, and dynamically manage content using MongoDB and Redis caching.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenArtzi4/media-library-manager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenArtzi4/media-library-manager/issues"
+  },
+  "homepage": "https://github.com/BenArtzi4/media-library-manager#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "compression": "^1.7.5",
+    "cookie-parser": "^1.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.3",
+    "passport": "^0.7.0",
+    "redis": "^4.7.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.7",
+    "nodemon": "^3.1.7"
+  }
+}
