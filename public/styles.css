@@ -1,103 +1,101 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
 /* General Styles */
 body {
-  font-family: "Poppins", sans-serif; /* Apply Poppins font */
-  margin: 0;
-  padding: 0;
   background-color: #ffffff;
   color: #333;
   text-align: center;
 }
 
-/* Header Section */
-header {
-  margin-top: 25px;
-  background-color: #343a40;
-  color: white;
-  text-align: center;
+.navbar {
+  font-family: "Poppins", sans-serif;
 }
 
-header h1 {
-  font-size: 2.8rem;
+.header-container {
+  padding-top: 4rem;
 }
 
-header .tagline {
-  font-size: 1.2rem;
-  color: #f1f1f1;
-  margin-top: 1px;
-}
-
-/* Main Content */
-main {
-  padding: 0px;
-}
-
-/* Intro Section - Removed the padding and text section */
-.intro {
-  margin: 0;
-  padding: 0;
-  font-size: 1.3rem;
-  color: #555;
+.welcome-container {
+  padding-top: 20px;
 }
 
 /* Genre Section */
 .genre-section {
   padding: 2px 0;
-  width: 60%; /* Set width of the genre section */
-  max-width: 1200px; /* Max width to prevent it from stretching too wide */
-  margin: 0 auto; /* Center the genre section */
+  width: 60%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Bootstrap Grid for Genre Cards */
-.genre-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  width: 100%; /* Ensures that the grid takes up the full width of the genre section */
-}
-
-/* Genre card: smaller fixed width and height for each card */
 .genre-card {
-  width: 150px; /* Smaller width for each card */
-  height: 200px; /* Smaller height for each card */
-  margin: 0 auto; /* Center the card */
-  overflow: hidden; /* Ensures that content doesn't overflow the card */
-  border-radius: 12px; /* Round corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft gray shadow around the card */
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transitions for hover effect */
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .genre-card:hover {
-  transform: translateY(-5px); /* Slight lift effect */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Card Image: using the 'card-img-top' class */
-.card-img-top {
-  width: 100%; /* Ensure the image takes up the full width of the card */
-  height: 100%; /* Ensure the image fills the full height of the card */
-  object-fit: cover; /* Ensure the image maintains its aspect ratio without distortion */
-  object-position: center; /* Center the image */
-  border-radius: 12px; /* Apply the same radius as the card */
+.genre-image {
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  margin: 70px auto 30px auto;
 }
 
-/* Custom Header Padding */
 .custom-header-padding {
-  padding-top: 3rem; /* Top padding */
-  padding-bottom: 0.5rem; /* Bottom padding */
+  padding: 3rem 0 0.5rem 0;
 }
 
-/* Override the .py-5 class to set padding to 1.5rem */
-.py-5 {
-  padding-top: 2rem !important; /* Set padding-top to 1.5rem */
-  padding-bottom: 2rem !important; /* Set padding-bottom to 1.5rem */
-}
-
-/* Footer Section */
 footer {
   margin-top: 20px;
   padding: 20px 0;
-  background-color: #4caf50; /* Green footer */
+  background-color: #4caf50;
   color: white;
   font-size: 0.9rem;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 10px auto;
+}
+
+.audio-player {
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 30px auto 0 auto;
+  max-width: 80%;
+}
+
+audio {
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 8px;
 }
