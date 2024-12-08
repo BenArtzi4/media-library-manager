@@ -78,7 +78,7 @@ main {
   height: 100%; /* Ensure the image fills the full height of the card */
   object-fit: cover; /* Ensure the image maintains its aspect ratio without distortion */
   object-position: center; /* Center the image */
-  border-radius: 6px; /* Apply the same radius as the card */
+  border-radius: 12px; /* Apply the same radius as the card */
 }
 
 /* Custom Header Padding */
