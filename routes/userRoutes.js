@@ -1,19 +1,16 @@
 import express from "express";
 import bcrypt from "bcryptjs";
-import User from "../models/User.js"; // Assuming your User model is in 'models/User.js'
+import User from "../models/User.js";
 
 const router = express.Router();
 
-// Route to display registration page
 router.get("/register", (req, res) => {
-  res.render("register"); // Render the register view (you should create this file)
+  res.render("register");
 });
 
-// Route to handle user registration
 router.post("/register", async (req, res) => {
   const { username, email, password, confirmPassword } = req.body;
 
-  // Simple validation
   if (password !== confirmPassword) {
     return res.status(400).send("Passwords do not match.");
   }
@@ -42,12 +39,10 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Route to display login page
 router.get("/login", (req, res) => {
-  res.render("login"); // Render the login view (you should create this file)
+  res.render("login");
 });
 
-// Route to handle user login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -69,8 +64,8 @@ router.post("/login", async (req, res) => {
 
 // Route to handle user logout
 router.get("/logout", (req, res) => {
-  req.session.destroy(); // Destroy the session
-  res.redirect("/login"); // Redirect to login page after logging out
+  req.session.destroy();
+  res.redirect("/login");
 });
 
 export default router;
