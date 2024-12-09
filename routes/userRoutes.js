@@ -1,70 +1,76 @@
 import express from "express";
-import User from "../models/User.js";
-import bcrypt from "bcrypt";
-import { body, validationResult } from "express-validator";
-import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import User from "../models/User.js"; // Assuming your User model is in 'models/User.js'
 
 const router = express.Router();
 
-// Register route
-router.post(
-  "/register",
-  [
-    body("username").isLength({ min: 3 }),
-    body("email").isEmail(),
-    body("password").isLength({ min: 6 }),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+// Route to display registration page
+router.get("/register", (req, res) => {
+  res.render("register"); // Render the register view (you should create this file)
+});
 
-    const { username, email, password } = req.body;
+// Route to handle user registration
+router.post("/register", async (req, res) => {
+  const { username, email, password, confirmPassword } = req.body;
 
-    // Check if the user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ error: "User already exists" });
-    }
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new user
-    const newUser = new User({ username, email, password: hashedPassword });
-    await newUser.save();
-
-    // Generate a token
-    const token = jwt.sign({ userId: newUser._id }, "your-secret-key", {
-      expiresIn: "1h",
-    });
-
-    res.status(201).json({ token, user: newUser });
+  // Simple validation
+  if (password !== confirmPassword) {
+    return res.status(400).send("Passwords do not match.");
   }
-);
 
-// Login route
+  // Check if the user already exists
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return res.status(400).send("User already exists.");
+  }
+
+  // Create a new user
+  const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+
+  const newUser = new User({
+    username,
+    email,
+    password: hashedPassword,
+  });
+
+  try {
+    await newUser.save(); // Save the user to the database
+    res.redirect("/login"); // Redirect to login page after successful registration
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error saving user.");
+  }
+});
+
+// Route to display login page
+router.get("/login", (req, res) => {
+  res.render("login"); // Render the login view (you should create this file)
+});
+
+// Route to handle user login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
   if (!user) {
-    return res.status(400).json({ error: "Invalid credentials" });
+    return res.status(400).send("User not found.");
   }
 
-  // Compare the password
-  const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password); // Compare password with hashed password
   if (!isMatch) {
-    return res.status(400).json({ error: "Invalid credentials" });
+    return res.status(400).send("Invalid password.");
   }
 
-  // Generate a token
-  const token = jwt.sign({ userId: user._id }, "your-secret-key", {
-    expiresIn: "1h",
-  });
+  // Store the user in the session
+  req.session.user = user;
 
-  res.json({ token, user });
+  res.redirect("/"); // Redirect to home or a logged-in page
+});
+
+// Route to handle user logout
+router.get("/logout", (req, res) => {
+  req.session.destroy(); // Destroy the session
+  res.redirect("/login"); // Redirect to login page after logging out
 });
 
 export default router;

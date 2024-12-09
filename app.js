@@ -1,24 +1,35 @@
 import express from "express";
-import session from "express-session";
 import mongoose from "mongoose";
+import session from "express-session";
 import userRoutes from "./routes/userRoutes.js";
-
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
-// MongoDB Connection
-mongoose.connect("mongodb://localhost/songelite", {});
+const mongoURI = process.env.MONGODB_URI;
+
+mongoose
+  .connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB connected successfully");
+  })
+  .catch((error) => {
+    console.log("Error connecting to MongoDB:", error);
+  });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Session configuration
 app.use(
   session({
-    secret: "your-secret-key",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false },
@@ -63,11 +74,8 @@ function serveRandomSong(res, genre) {
     }
 
     const randomSong = songs[Math.floor(Math.random() * songs.length)];
-
     const [artist, song] = randomSong.replace(".mp3", "").split(" - ");
-
     const imageName = randomSong.replace(".mp3", ".png");
-
     const songPath = `/media/${genre}/${randomSong}`;
 
     res.render("genre", {
