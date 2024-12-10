@@ -1,0 +1,101 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* General Styles */
+body {
+  background-color: #ffffff;
+  color: #333;
+  text-align: center;
+}
+
+.navbar {
+  font-family: "Poppins", sans-serif;
+}
+
+.header-container {
+  padding-top: 4rem;
+}
+
+.welcome-container {
+  padding-top: 20px;
+}
+
+/* Genre Section */
+.genre-section {
+  padding: 2px 0;
+  width: 60%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.genre-card {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.genre-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.genre-image {
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  margin: 70px auto 30px auto;
+}
+
+.custom-header-padding {
+  padding: 3rem 0 0.5rem 0;
+}
+
+footer {
+  margin-top: 20px;
+  padding: 20px 0;
+  background-color: #4caf50;
+  color: white;
+  font-size: 0.9rem;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 10px auto;
+}
+
+.audio-player {
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 30px auto 0 auto;
+  max-width: 80%;
+}
+
+audio {
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 8px;
+}

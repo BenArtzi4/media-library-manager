@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SongElite</title>
+    <link rel="icon" type="image/jpeg" href="/images/SongElite-icon.jpg" />
+
+    <!-- Add Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Add Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="50">
+    <nav
+      id="navbar"
+      class="navbar navbar-expand-lg navbar-light bg-light fixed-top"
+    >
+      <div class="container">
+        <img
+          src="/images/SongElite-icon.jpg"
+          alt="SongElite Logo"
+          style="
+            width: 40px;
+            height: auto;
+            border-radius: 50%;
+            padding-right: 10px;
+          "
+        />
+
+        <a class="navbar-brand" href="#">SongElite</a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#intro">Introduction</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#genres">Genres</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header id="intro" class="bg-dark text-white custom-header-padding">
+      <div class="container text-center welcome-container">
+        <h1>Welcome to SongElite</h1>
+        <p class="tagline">Your personal gateway to musical exploration</p>
+      </div>
+    </header>
+
+    <main class="py-3">
+      <div class="container">
+        <section class="genre-section" id="genres">
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            <!-- English Classics -->
+            <div class="col">
+              <div class="card shadow-sm">
+                <a href="/media/english-classics">
+                  <img
+                    src="/images/english-classics.jpg"
+                    alt="English Classics"
+                    class="card-img-top"
+                  />
+                </a>
+              </div>
+            </div>
+
+            <!-- Israeli Party Vibes -->
+            <div class="col">
+              <div class="card shadow-sm">
+                <a href="/media/israeli-party">
+                  <img
+                    src="/images/israeli-party.jpg"
+                    alt="Israeli Party"
+                    class="card-img-top"
+                  />
+                </a>
+              </div>
+            </div>
+
+            <!-- English Party Beats -->
+            <div class="col">
+              <div class="card shadow-sm">
+                <a href="/media/english-party">
+                  <img
+                    src="/images/english-party.jpg"
+                    alt="English Party"
+                    class="card-img-top"
+                  />
+                </a>
+              </div>
+            </div>
+
+            <!-- Israeli Classics -->
+            <div class="col">
+              <div class="card shadow-sm">
+                <a href="/media/israeli-classics">
+                  <img
+                    src="/images/israeli-classics.jpg"
+                    alt="Israeli Classics"
+                    class="card-img-top"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-1">
+      <p>SongElite © 2024. All Rights Reserved.</p>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz4fnFO9gyb71p0hDT6K3h2TL3rh8huKqz9b6s3R0NJw8YpfWqFjt5g2k7b"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+      integrity="sha384-pzjw8f+ua7Kw1TIq0bqA1o6Dd4f8v5TboG2ctI9w+zvS/jr59F2uAsnIkpJ9p9n8i"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
