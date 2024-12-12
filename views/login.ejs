@@ -12,11 +12,17 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- Ensure this is the correct path to your CSS file -->
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <header class="bg-dark text-white text-center custom-header-padding">
-      <div class="container">
+      <div class="container position-relative">
+        <img
+          src="/images/SongElite-icon.jpg"
+          alt="SongElite Logo"
+          class="logo-img-floating"
+        />
         <h1>Login to SongElite</h1>
         <p>Your personal gateway to musical exploration</p>
       </div>
@@ -25,6 +31,9 @@
     <main class="py-5">
       <div class="container">
         <form action="/users/login" method="POST" class="shadow p-4 rounded">
+          <% if (error) { %>
+          <div class="alert alert-danger" role="alert"><%= error %></div>
+          <% } %>
           <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
             <input
@@ -45,10 +54,17 @@
               required
             />
           </div>
-          <button type="submit" class="btn btn-primary w-100">Login</button>
+          <button type="submit" class="btn btn-dark-blue w-100">Login</button>
         </form>
         <p class="text-center mt-3">
-          Don't have an account? <a href="/users/register">Register here</a>
+          <a href="/users/register" class="custom-link"
+            >Don't have an account? Register here</a
+          >
+        </p>
+        <p class="text-center mt-3">
+          <a href="/users/forgot-password" class="custom-link"
+            >Forgot my password?</a
+          >
         </p>
       </div>
     </main>
