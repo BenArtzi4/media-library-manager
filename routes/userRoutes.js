@@ -1,5 +1,4 @@
 import express from "express";
-import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 
 const router = express.Router();
@@ -15,24 +14,20 @@ router.post("/register", async (req, res) => {
     return res.status(400).send("Passwords do not match.");
   }
 
-  // Check if the user already exists
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     return res.status(400).send("User already exists.");
   }
 
-  // Create a new user
-  const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
-
   const newUser = new User({
     username,
     email,
-    password: hashedPassword,
+    password,
   });
 
   try {
-    await newUser.save(); // Save the user to the database
-    res.redirect("/login"); // Redirect to login page after successful registration
+    await newUser.save();
+    res.redirect("/users/login");
   } catch (err) {
     console.error(err);
     res.status(500).send("Error saving user.");
@@ -51,21 +46,18 @@ router.post("/login", async (req, res) => {
     return res.status(400).send("User not found.");
   }
 
-  const isMatch = await bcrypt.compare(password, user.password); // Compare password with hashed password
+  const isMatch = await user.comparePassword(password);
   if (!isMatch) {
     return res.status(400).send("Invalid password.");
   }
 
-  // Store the user in the session
   req.session.user = user;
-
-  res.redirect("/"); // Redirect to home or a logged-in page
+  res.redirect("/"); // Redirect to home after successful login
 });
 
-// Route to handle user logout
 router.get("/logout", (req, res) => {
   req.session.destroy();
-  res.redirect("/login");
+  res.redirect("/users/login");
 });
 
 export default router;

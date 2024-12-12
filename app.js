@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
@@ -5,11 +8,6 @@ import userRoutes from "./routes/userRoutes.js";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
-import dotenv from "dotenv";
-
-dotenv.config();
-console.log("Heloooooo");
-console.log(process.env.PORT);
 
 const app = express();
 const PORT = process.env.PORT;
@@ -37,6 +35,12 @@ app.use(
   })
 );
 
+// Middleware to check if user is logged in
+app.use((req, res, next) => {
+  res.locals.user = req.session.user; // Make user available in all views
+  next();
+});
+
 // Routes
 app.use("/users", userRoutes);
 
@@ -50,7 +54,34 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (req, res) => {
-  res.render("welcome");
+  if (!req.session.user) {
+    return res.redirect("/users/login");
+  }
+
+  const genres = [
+    {
+      name: "English Classics",
+      slug: "english-classics",
+      image: "/images/english-classics.jpg",
+    },
+    {
+      name: "English Party",
+      slug: "english-party",
+      image: "/images/english-party.jpg",
+    },
+    {
+      name: "Israeli Classics",
+      slug: "israeli-classics",
+      image: "/images/israeli-classics.jpg",
+    },
+    {
+      name: "Israeli Party",
+      slug: "israeli-party",
+      image: "/images/israeli-party.jpg",
+    },
+  ];
+
+  res.render("welcome", { user: req.session.user, genres });
 });
 
 app.get("/media/:genre", (req, res) => {
