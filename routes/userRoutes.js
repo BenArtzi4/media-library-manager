@@ -21,7 +21,6 @@ router.get("/register", (req, res) => {
 router.post("/register", async (req, res) => {
   const { username, email, password, confirmPassword } = req.body;
 
-  // Validate password match
   if (password !== confirmPassword) {
     return res.status(400).send("Passwords do not match.");
   }
@@ -32,12 +31,7 @@ router.post("/register", async (req, res) => {
     return res.status(400).send("User already exists.");
   }
 
-  // Create and save new user
-  const newUser = new User({
-    username,
-    email,
-    password,
-  });
+  const newUser = new User({ username, email, password });
 
   try {
     await newUser.save();
@@ -53,7 +47,6 @@ router.post("/register", async (req, res) => {
  * Render the login page.
  */
 router.get("/login", (req, res) => {
-  // Initially, no error
   res.render("login", { error: null });
 });
 
@@ -64,21 +57,16 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  // Check if user exists
   const user = await User.findOne({ email });
   if (!user) {
-    // User not found, re-render with error
     return res.render("login", { error: "User not found." });
   }
 
-  // Compare passwords
   const isMatch = await user.comparePassword(password);
   if (!isMatch) {
-    // Wrong password, re-render with error
     return res.render("login", { error: "Invalid password." });
   }
 
-  // If match, set user session and redirect
   req.session.user = user;
   res.redirect("/");
 });
@@ -107,7 +95,6 @@ router.get("/forgot-password", (req, res) => {
 router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
 
-  // Check if user exists
   const user = await User.findOne({ email });
   if (!user) {
     return res.render("forgot-password", {
@@ -116,13 +103,12 @@ router.post("/forgot-password", async (req, res) => {
     });
   }
 
-  // Generate a reset token
+  // Generate a reset token for 1 hour
   const resetToken = crypto.randomBytes(20).toString("hex");
   user.resetPasswordToken = resetToken;
-  user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+  user.resetPasswordExpires = Date.now() + 3600000;
   await user.save();
 
-  // Send email with reset link
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
@@ -139,9 +125,9 @@ router.post("/forgot-password", async (req, res) => {
     to: user.email,
     from: process.env.EMAIL_USER,
     subject: "songElite - Password Reset",
-    text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.
+    text: `You are receiving this because you (or someone else) requested a password reset.
     
-Please click on the following link, or paste this into your browser to complete the process:
+Please click on the following link, or paste it into your browser to complete the process:
 ${resetURL}
 
 If you did not request this, please ignore this email and your password will remain unchanged.
@@ -179,7 +165,11 @@ router.get("/reset-password/:token", async (req, res) => {
       .send("Password reset token is invalid or has expired.");
   }
 
-  res.render("reset-password", { token: req.params.token });
+  res.render("reset-password", {
+    token: req.params.token,
+    error: null,
+    message: null,
+  });
 });
 
 /**
@@ -189,7 +179,6 @@ router.get("/reset-password/:token", async (req, res) => {
 router.post("/reset-password/:token", async (req, res) => {
   const { password, confirmPassword } = req.body;
 
-  // Check if passwords match
   if (password !== confirmPassword) {
     return res.status(400).send("Passwords do not match.");
   }
@@ -205,7 +194,6 @@ router.post("/reset-password/:token", async (req, res) => {
       .send("Password reset token is invalid or has expired.");
   }
 
-  // Update the user's password
   const hashedPassword = await bcrypt.hash(password, 10);
   user.password = hashedPassword;
   user.resetPasswordToken = undefined;
