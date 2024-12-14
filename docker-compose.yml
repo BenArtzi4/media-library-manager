@@ -9,6 +9,7 @@ services:
       - SESSION_SECRET=${SESSION_SECRET}
     depends_on:
       - mongodb
+      - redis
     volumes:
       - .:/usr/src/app
     command: ["npx", "nodemon", "app.js"]
@@ -25,16 +26,10 @@ services:
       - MONGODB_INITDB_ROOT_USERNAME=${MONGODB_INITDB_ROOT_USERNAME}
       - MONGODB_INITDB_ROOT_PASSWORD=${MONGODB_INITDB_ROOT_PASSWORD}
     restart: always
-# original:
-# services:
-#   app:
-#     build: .
-#     container_name: songelite-app
-#     ports:
-#       - "3000:3000"
-#     environment:
-#       - MONGODB_URI=${MONGODB_URI}
-#       - SESSION_SECRET=${SESSION_SECRET}
-#     depends_on:
-#       - mongodb
-#     command: ["npm", "start"]
+
+  redis:
+    image: redis:latest
+    container_name: songelite-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes

@@ -9,11 +9,13 @@ import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 
+import { RedisStore } from "connect-redis";
+import { createClient } from "redis";
+
 const app = express();
 const PORT = process.env.PORT;
 
 const mongoURI = process.env.MONGODB_URI;
-
 mongoose
   .connect(mongoURI)
   .then(() => {
@@ -26,18 +28,29 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Create and connect Redis client
+const redisClient = createClient({
+  url: "redis://redis:6379",
+});
+await redisClient.connect();
+
+const redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+});
+
 app.use(
   session({
-    secret: process.env.SESSION_SECRET, // Use the secret from the .env file
+    store: redisStore,
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { secure: false },
   })
 );
 
-// Middleware to check if user is logged in
 app.use((req, res, next) => {
-  res.locals.user = req.session.user; // Make user available in all views
+  res.locals.user = req.session.user;
   next();
 });
 
@@ -84,25 +97,35 @@ app.get("/", (req, res) => {
   res.render("welcome", { user: req.session.user, genres });
 });
 
-app.get("/media/:genre", (req, res) => {
+app.get("/media/:genre", async (req, res) => {
   const genre = req.params.genre;
-  serveRandomSong(res, genre);
+  await serveRandomSong(req, res, genre);
 });
 
-function serveRandomSong(res, genre) {
-  const mediaDir = path.join(__dirname, "media", genre);
+async function serveRandomSong(req, res, genre) {
+  try {
+    let songs = await redisClient.get(`songs:${genre}`);
+    if (!songs) {
+      // Not cached, read from filesystem
+      const mediaDir = path.join(__dirname, "media", genre);
+      let files;
+      try {
+        files = fs.readdirSync(mediaDir);
+      } catch (err) {
+        return res.status(500).send("Error reading the media directory");
+      }
 
-  fs.readdir(mediaDir, (err, files) => {
-    if (err) {
-      res.status(500).send("Error reading the media directory");
-      return;
-    }
+      const mp3Files = files.filter((file) => file.endsWith(".mp3"));
 
-    const songs = files.filter((file) => file.endsWith(".mp3"));
+      if (mp3Files.length === 0) {
+        return res.status(404).send("No songs found in this genre");
+      }
 
-    if (songs.length === 0) {
-      res.status(404).send("No songs found in this genre");
-      return;
+      // Cache the mp3 files list in Redis - Cache for 1 hour
+      await redisClient.setEx(`songs:${genre}`, 3600, JSON.stringify(mp3Files));
+      songs = mp3Files;
+    } else {
+      songs = JSON.parse(songs);
     }
 
     const randomSong = songs[Math.floor(Math.random() * songs.length)];
@@ -112,12 +135,15 @@ function serveRandomSong(res, genre) {
 
     res.render("genre", {
       genre: genre.replace("-", " ").toUpperCase(),
-      song: song,
-      artist: artist,
+      song,
+      artist,
       image: `/media/${genre}/${imageName}`,
-      songPath: songPath,
+      songPath,
     });
-  });
+  } catch (error) {
+    console.error("Error serving random song:", error);
+    res.status(500).send("Internal Server Error");
+  }
 }
 
 app.listen(PORT, () => {
