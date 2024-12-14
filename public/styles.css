@@ -172,16 +172,51 @@ header .container {
   border-radius: 50%;
 }
 
+@media (max-width: 1400px) {
+  .logo-img-floating {
+    left: 250px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .logo-img-floating {
+    left: 170px;
+  }
+}
+
+@media (max-width: 990px) {
+  .logo-img-floating {
+    left: 60px;
+  }
+}
+
 @media (max-width: 768px) {
   .logo-img-floating {
-    left: 20px;
-    width: 45px;
+    left: 5px;
+    width: 80px;
+  }
+}
+
+@media (max-width: 575px) {
+  .logo-img-floating {
+    width: 70px;
+  }
+}
+
+@media (max-width: 500px) {
+  .logo-img-floating {
+    width: 60px;
   }
 }
 
 @media (max-width: 480px) {
   .logo-img-floating {
-    left: 5px;
-    width: 35px;
+    width: 45px;
+  }
+}
+
+@media (max-width: 440px) {
+  .logo-img-floating {
+    display: none;
   }
 }
