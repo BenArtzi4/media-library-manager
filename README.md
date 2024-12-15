@@ -1,12 +1,11 @@
-# SongElite
-
-<p align="center">
-  <img 
+<div align="center">
+  <h1> SongElite </h1>
+  <img
     src="https://github.com/user-attachments/assets/97fa38a5-51fd-4cae-833b-175b1df5699d" 
     alt="Welcome Page" 
     width="600" 
-  />
-</p>
+    />
+</div>
 
 - **SongElite** is a Node.js web application that allows users to log in, select their **favorite music genres**, and enjoy a curated selection of songs.
 - **It’s not just a music player** — it's a personal collection of the **best songs** discovered over the years.
