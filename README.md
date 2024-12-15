@@ -1,7 +1,12 @@
-
-<img src="https://github.com/user-attachments/assets/8478acdc-0197-4051-864d-21ccd897bd38" alt="SongElite-icon" width="100" />
-
 # SongElite
+
+<p align="center">
+  <img 
+    src="https://github.com/user-attachments/assets/97fa38a5-51fd-4cae-833b-175b1df5699d" 
+    alt="Welcome Page" 
+    width="600" 
+  />
+</p>
 
 - **SongElite** is a Node.js web application that allows users to log in, select their **favorite music genres**, and enjoy a curated selection of songs.
 - **It’s not just a music player** — it's a personal collection of the **best songs** discovered over the years.
@@ -133,21 +138,48 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Screenshots 
 ### Login Page
+<p align="center">
+  <img 
+    src="https://github.com/user-attachments/assets/5d98add5-b858-4122-b6ab-f3fd50799938" 
+    alt="Welcome Page" 
+    width="500" 
+  />
+</p>
 
 ### Register Page
+<p align="center">
+  <img 
+    src="https://github.com/user-attachments/assets/0a41868c-f40a-4d31-a32f-fbcf161bdcd9" 
+    alt="Welcome Page" 
+    width="500" 
+  />
+</p>
 
 ### Forgot Password Page
+<p align="center">
+  <img 
+    src="https://github.com/user-attachments/assets/727d6449-2317-4208-9f21-ff9029525b86" 
+    alt="Welcome Page" 
+    width="500" 
+  />
+</p>
 
-### Welcome Page
 
 ### Example Genre Page (e.g., English Classics)
+<p align="center">
+  <img 
+    src="https://github.com/user-attachments/assets/94a93ac3-70fc-4041-a978-f15a4fd59a30" 
+    alt="Welcome Page" 
+    width="500" 
+  />
+</p>
 
-Enjoy your personalized SongElite experience!
-
+**Enjoy your personalized SongElite experience!**
 
 ------
 ### Note:
-All music and images are hosted locally. Users can customize their own collections and images.
-Due to copyright restrictions, this repository will not provide the actual music files.
+- All music and images are hosted locally.
+- Users can customize their own collections and images.
+- Due to copyright restrictions, this repository will not provide the actual music files.
 ------
 
