@@ -16,14 +16,17 @@ const app = express();
 const PORT = process.env.PORT;
 
 const mongoURI = process.env.MONGODB_URI;
-mongoose
-  .connect(mongoURI)
-  .then(() => {
+
+async function connectToMongo() {
+  try {
+    await mongoose.connect(mongoURI);
     console.log("MongoDB connected successfully");
-  })
-  .catch((error) => {
+  } catch (error) {
     console.log("Error connecting to MongoDB:", error);
-  });
+  }
+}
+
+connectToMongo();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
